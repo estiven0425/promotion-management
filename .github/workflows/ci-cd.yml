@@ -15,9 +15,9 @@ jobs:
       postgres:
         image: postgres:15-alpine
         env:
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: promotions_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres_test_password
         ports:
           - 5432:5432
         options: >-
@@ -51,10 +51,10 @@ jobs:
       - name: Instalar dependencias, Linter y Tests Backend
         env:
           POSTGRES_HOST: localhost
-          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_PORT: 5432
+          POSTGRES_DB: promotions_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres_test_password
         run: |
           cd backend
           pnpm install --frozen-lockfile
