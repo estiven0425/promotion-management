@@ -103,6 +103,18 @@ jobs:
       - name: Checkout del código
         uses: actions/checkout@v4
 
+      - name: Validar que existan los Secrets necesarios
+        env:
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          BACKEND_PORT: ${{ secrets.BACKEND_PORT }}
+        run: |
+          if [ -z "$POSTGRES_DB" ] || [ -z "$POSTGRES_USER" ] || [ -z "$POSTGRES_PASSWORD" ] || [ -z "$BACKEND_PORT" ]; then
+            echo "::error::Faltan GitHub Secrets por configurar en el repositorio."
+            exit 1
+          fi
+
       - name: Crear archivo .env usando únicamente GitHub Secrets
         run: |
           cat <<EOF > .env
